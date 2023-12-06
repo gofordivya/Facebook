@@ -14,5 +14,6 @@ router.post("/submit-comment/:id", homeController.submitComment);
 router.get("/sign-up", homeController.loadSignUpPage);
 router.get("/sign-in", homeController.loadSignInPage);
 router.post("/create-account", homeController.createAccount);
+router.post("/user-login", homeController.userLogin);
 
 module.exports = router;

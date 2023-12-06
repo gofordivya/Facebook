@@ -1,13 +1,13 @@
 <%-include ("./header")%>
 
-<form class="container">
+<form action="/user-login" method="POST" class="container">
   <div class="form-group">
     <label>Email address</label>
-    <input type="email" class="form-control" />
+    <input type="email" class="form-control" name="email" />
   </div>
   <div class="form-group">
     <label>Password</label>
-    <input type="password" class="form-control" />
+    <input type="password" class="form-control" name="password" />
   </div>
   <button type="submit" class="btn btn-primary">Login</button>
 </form>

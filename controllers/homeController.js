@@ -84,6 +84,21 @@ const createAccount = (req, res) => {
   }
 };
 
+const userLogin = async (req, res) => {
+  let userDetail = await UserModel.findOne({ email: req.body.email });
+  if (userDetail) {
+    let password = await bcrypt.compareSync(
+      req.body.password,
+      userDetail.password
+    );
+    if (password) {
+      res.redirect("/");
+    } else {
+      console.log("error....");
+    }
+  }
+};
+
 module.exports = {
   getHomepage,
   submitPost,
@@ -94,4 +109,5 @@ module.exports = {
   loadSignUpPage,
   loadSignInPage,
   createAccount,
+  userLogin,
 };

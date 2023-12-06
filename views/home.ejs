@@ -1,0 +1,43 @@
+<%-include ("./header")%>
+<body class="container">
+  <h1>Timeline</h1>
+  <form action="/submit-post" method="POST" class="form-group">
+    <label for="content">Post your message (minimum 25 characters):</label>
+    <textarea name="content" id="content" required></textarea>
+    <button type="submit" class="btn btn-primary">Submit Post</button>
+  </form>
+  <div class="result mt-4">
+    <% if (result.length > 0) { %> <% result.forEach(element => { %>
+    <div class="card mb-2 mt-2">
+      <div class="card-body">
+        <p class="card-text"><%= element.content %></p>
+        <a href="/edit-post/<%= element.id %>" class="btn btn-primary">edit </a>
+        <a href="/delete-post/<%= element.id %>" class="btn btn-primary"
+          >delete</a
+        >
+
+        <% if (element.comment.length > 0) { %> <%
+        element.comment.forEach(comment => { %>
+        <div class="card-body">
+          <p class="card-text"><%= comment %></p>
+        </div>
+        <% }); %> <% } %>
+
+        <form
+          action="/submit-comment/<%= element.id %>"
+          method="POST"
+          class="form-group"
+        >
+          <p for="content">Post your comments</p>
+
+          <textarea name="comment" id="content" required></textarea>
+          <button type="submit" class="btn btn-primary">Post a comment</button>
+        </form>
+      </div>
+    </div>
+    <% }); %> <% } else { %>
+    <p>There is no record.</p>
+    <% } %>
+  </div>
+</body>
+<%-include ("./footer")%>

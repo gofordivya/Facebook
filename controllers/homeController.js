@@ -1,4 +1,6 @@
 const { Post } = require("../models/post");
+const { UserModel } = require("../models/user");
+const bcrypt = require("bcrypt");
 
 const getHomepage = (req, res) => {
   Post.find()
@@ -61,6 +63,27 @@ const loadSignInPage = (req, res) => {
   res.render("signin");
 };
 
+const createAccount = (req, res) => {
+  if (!req.body.userName || !req.body.password || !req.body.email) {
+    console.error("Please fill all fields");
+  } else {
+    let hashedPass = bcrypt.hashSync(req.body.password, 12);
+    let userObj = {
+      ...req.body,
+      password: hashedPass,
+    };
+    let newUser = new UserModel(userObj);
+    newUser
+      .save()
+      .then(() => {
+        res.render("signin");
+      })
+      .catch((err) => {
+        console.log("error", err);
+      });
+  }
+};
+
 module.exports = {
   getHomepage,
   submitPost,
@@ -70,4 +93,5 @@ module.exports = {
   submitComment,
   loadSignUpPage,
   loadSignInPage,
+  createAccount,
 };

@@ -13,5 +13,6 @@ router.post("/submit-comment/:id", homeController.submitComment);
 
 router.get("/sign-up", homeController.loadSignUpPage);
 router.get("/sign-in", homeController.loadSignInPage);
+router.post("/create-account", homeController.createAccount);
 
 module.exports = router;

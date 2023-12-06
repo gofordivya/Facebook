@@ -11,4 +11,7 @@ router.post("/update-post/:id", homeController.updatePost);
 router.get("/delete-post/:id", homeController.deletePost);
 router.post("/submit-comment/:id", homeController.submitComment);
 
+router.get("/sign-up", homeController.loadSignUpPage);
+router.get("/sign-in", homeController.loadSignInPage);
+
 module.exports = router;

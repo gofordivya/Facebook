@@ -1,4 +1,3 @@
-const { raw } = require("express");
 const { Post } = require("../models/post");
 
 const getHomepage = (req, res) => {
@@ -54,6 +53,14 @@ const submitComment = (req, res) => {
     .catch((err) => console.log(err));
 };
 
+const loadSignUpPage = (req, res) => {
+  res.render("signup");
+};
+
+const loadSignInPage = (req, res) => {
+  res.render("signin");
+};
+
 module.exports = {
   getHomepage,
   submitPost,
@@ -61,4 +68,6 @@ module.exports = {
   updatePost,
   deletePost,
   submitComment,
+  loadSignUpPage,
+  loadSignInPage,
 };

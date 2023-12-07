@@ -9,7 +9,7 @@ const isAuth = (req, res, next) => {
 };
 
 const isLoggedInUser = (req, res, next) => {
-  if (req.cookies.isLoggedIn === "true") {
+  if (req.cookies.isLoggedIn) {
     jwt.verify(req.cookies.jwt, "jwt user detail", function (err, decoded) {
       if (err) {
         console.log(err);

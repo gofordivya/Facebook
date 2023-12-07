@@ -112,7 +112,8 @@ const userLogin = async (req, res) => {
 };
 
 const logout = async (req, res) => {
-  res.cookie("isLoggedIn", false);
+  res.clearCookie("isLoggedIn");
+  res.clearCookie("jwt");
   res.render("signin");
 };
 

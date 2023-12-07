@@ -1,3 +1,5 @@
+const jwt = require("jsonwebtoken");
+
 const isAuth = (req, res, next) => {
   if (req.body.email !== "") {
     next();
@@ -8,7 +10,15 @@ const isAuth = (req, res, next) => {
 
 const isLoggedInUser = (req, res, next) => {
   if (req.cookies.isLoggedIn === "true") {
-    next();
+    jwt.verify(req.cookies.jwt, "jwt user detail", function (err, decoded) {
+      if (err) {
+        console.log(err);
+        res.render("signin");
+      } else {
+        req.userDetail = JSON.parse(decoded.userDetail);
+        next();
+      }
+    });
   } else {
     res.render("signin");
   }

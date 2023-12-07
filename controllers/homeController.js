@@ -1,13 +1,17 @@
 const { Post } = require("../models/post");
 const { UserModel } = require("../models/user");
 const bcrypt = require("bcrypt");
-const cookieParser = require("cookie-parser");
+const jwt = require("jsonwebtoken");
 
 const getHomepage = (req, res) => {
+  const userDetail = req.userDetail;
+  console.log(userDetail);
   Post.find()
     .sort({ createdAt: -1 })
-    .then((result) => res.render("home", { result, err: null }))
-    .catch((err) => res.render("home", { result: [], err: err.errors }));
+    .then((result) => res.render("home", { result, userDetail, err: null }))
+    .catch((err) =>
+      res.render("home", { result: [], userDetail, err: err.errors })
+    );
 };
 
 const submitPost = (req, res) => {
@@ -94,7 +98,12 @@ const userLogin = async (req, res) => {
       userDetail.password
     );
     if (password) {
+      const jwtToken = jwt.sign(
+        { userDetail: JSON.stringify(userDetail) },
+        "jwt user detail"
+      );
       res.cookie("isLoggedIn", true);
+      res.cookie("jwt", jwtToken);
       res.redirect("/");
     } else {
       console.log("error....");

@@ -1,6 +1,7 @@
 const { Post } = require("../models/post");
 const { UserModel } = require("../models/user");
 const bcrypt = require("bcrypt");
+const cookieParser = require("cookie-parser");
 
 const getHomepage = (req, res) => {
   Post.find()
@@ -85,6 +86,7 @@ const createAccount = (req, res) => {
 };
 
 const userLogin = async (req, res) => {
+  console.log("userlogin.....");
   let userDetail = await UserModel.findOne({ email: req.body.email });
   if (userDetail) {
     let password = await bcrypt.compareSync(
@@ -92,11 +94,17 @@ const userLogin = async (req, res) => {
       userDetail.password
     );
     if (password) {
+      res.cookie("isLoggedIn", true);
       res.redirect("/");
     } else {
       console.log("error....");
     }
   }
+};
+
+const logout = async (req, res) => {
+  res.cookie("isLoggedIn", false);
+  res.render("signin");
 };
 
 module.exports = {
@@ -110,4 +118,5 @@ module.exports = {
   loadSignInPage,
   createAccount,
   userLogin,
+  logout,
 };
